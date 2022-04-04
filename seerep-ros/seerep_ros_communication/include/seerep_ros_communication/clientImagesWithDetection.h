@@ -18,6 +18,7 @@
 #include <seerep_ros_conversions_fb/conversions.h>
 
 // ros
+#include <ros/callback_queue.h>
 #include <ros/master.h>
 #include <ros/ros.h>
 #include <sensor_msgs/NavSatFix.h>
@@ -45,11 +46,13 @@ public:
   TransferImagesWithDetection(std::shared_ptr<grpc::Channel> channel_ptr);
   ~TransferImagesWithDetection();
 
-  void send(const sensor_msgs::Image::ConstPtr& msg);
+  void sendImage(const sensor_msgs::Image::ConstPtr& msg);
 
-  void send(const vision_msgs::Detection2DArray::ConstPtr& msg);
+  void sendDetection(const vision_msgs::Detection2DArray::ConstPtr& msg);
 
-  void send(const sensor_msgs::NavSatFix::ConstPtr& msg);
+  void sendTf(const sensor_msgs::NavSatFix::ConstPtr& msg);
+
+  void spin();
 
 private:
   void createSubscriber();
@@ -84,6 +87,8 @@ private:
   // ros
   ros::NodeHandle nh_;
   std::map<std::string, ros::Subscriber> subscribers_;
+  std::map<std::string, ros::SubscribeOptions> ops_;
+  ros::CallbackQueue rosQueue;
 };
 
 } /* namespace seerep_grpc_ros */

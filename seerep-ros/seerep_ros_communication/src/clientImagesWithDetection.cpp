@@ -7,6 +7,8 @@ TransferImagesWithDetection::TransferImagesWithDetection(std::shared_ptr<grpc::C
   , stubMeta_(seerep::fb::MetaOperations::NewStub(channel_ptr))
   , stubTf_(seerep::fb::TfService::NewStub(channel_ptr))
 {
+  nh_.setCallbackQueue(&rosQueue);
+
   writerTf_ = stubTf_->TransferTransformStamped(&contextTf_, &tfResponse_);
 
   writerImage_ = stubImage_->TransferImage(&contextImage_, &imageResponse_);
@@ -31,7 +33,7 @@ TransferImagesWithDetection::~TransferImagesWithDetection()
   ROS_INFO_STREAM("image transfer server response: " << imageResponse_.GetRoot()->message());
 }
 
-void seerep_grpc_ros::TransferImagesWithDetection::send(const sensor_msgs::Image::ConstPtr& msg)
+void seerep_grpc_ros::TransferImagesWithDetection::sendImage(const sensor_msgs::Image::ConstPtr& msg)
 {
   boost::uuids::uuid msguuid = boost::uuids::random_generator()();
   std::string uuidstring = boost::lexical_cast<std::string>(msguuid);
@@ -52,7 +54,7 @@ void seerep_grpc_ros::TransferImagesWithDetection::send(const sensor_msgs::Image
   ROS_WARN_STREAM(uuidstring << " transfered image");
 }
 
-void seerep_grpc_ros::TransferImagesWithDetection::send(const vision_msgs::Detection2DArray::ConstPtr& msg)
+void seerep_grpc_ros::TransferImagesWithDetection::sendDetection(const vision_msgs::Detection2DArray::ConstPtr& msg)
 {
   uint64_t time = (uint64_t)msg->header.stamp.sec << 32 | msg->header.stamp.nsec;
   std::string uuidstring;
@@ -88,7 +90,7 @@ void seerep_grpc_ros::TransferImagesWithDetection::send(const vision_msgs::Detec
   }
 }
 
-void seerep_grpc_ros::TransferImagesWithDetection::send(const sensor_msgs::NavSatFix::ConstPtr& msg)
+void seerep_grpc_ros::TransferImagesWithDetection::sendTf(const sensor_msgs::NavSatFix::ConstPtr& msg)
 {
   ROS_INFO_STREAM("transfering tf to server" << msg->header.stamp.sec);
   if (!localCartesian_)
@@ -116,16 +118,27 @@ void seerep_grpc_ros::TransferImagesWithDetection::send(const sensor_msgs::NavSa
   }
 }
 
+void TransferImagesWithDetection::spin()
+{
+  auto spinner = ros::MultiThreadedSpinner();
+  spinner.spin(&rosQueue);
+}
+
 void TransferImagesWithDetection::createSubscriber()
 {
-  subscribers_.emplace("/camera/color/image_raw",
-                       nh_.subscribe<sensor_msgs::Image>("/camera/color/image_raw", 10,
-                                                         &TransferImagesWithDetection::send, this));
+  std::string imageTopic = "/camera/color/image_raw";
+  ros::SubscribeOptions ops = ros::SubscribeOptions::create<sensor_msgs::Image>(
+      imageTopic, 100, boost::bind(&TransferImagesWithDetection::sendImage, this, _1), ros::VoidPtr(), &this->rosQueue);
+
+  // ops.allow_concurrent_callbacks = true;
+  ops_.emplace(imageTopic, ops);
+  subscribers_.emplace(imageTopic, nh_.subscribe(ops));
+
   subscribers_.emplace("/camera/color/Detection2DArray",
                        nh_.subscribe<vision_msgs::Detection2DArray>("/camera/color/Detection2DArray", 10,
-                                                                    &TransferImagesWithDetection::send, this));
+                                                                    &TransferImagesWithDetection::sendDetection, this));
   subscribers_.emplace("/fix",
-                       nh_.subscribe<sensor_msgs::NavSatFix>("/fix", 10, &TransferImagesWithDetection::send, this));
+                       nh_.subscribe<sensor_msgs::NavSatFix>("/fix", 10, &TransferImagesWithDetection::sendTf, this));
 }
 
 void TransferImagesWithDetection::createProject()
@@ -167,9 +180,7 @@ int main(int argc, char** argv)
   seerep_grpc_ros::TransferImagesWithDetection transferImagesWithDetection(
       grpc::CreateChannel(server_address, grpc::InsecureChannelCredentials()));
 
-  // ros::spin();
-  auto spinner = ros::MultiThreadedSpinner();
-  spinner.spin();
+  transferImagesWithDetection.spin();
 
   return EXIT_SUCCESS;
 }
