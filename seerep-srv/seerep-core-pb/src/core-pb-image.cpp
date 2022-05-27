@@ -16,7 +16,7 @@ CorePbImage::~CorePbImage()
 
 std::vector<seerep::Image> CorePbImage::getData(const seerep::Query& query)
 {
-  std::cout << "loading image from images/" << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading image from images/";
   seerep_core_msgs::Query queryCore;
   boost::uuids::string_generator gen;
   queryCore.projects.push_back(gen(query.projectuuid()));

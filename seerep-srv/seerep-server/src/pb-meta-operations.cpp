@@ -10,7 +10,7 @@ grpc::Status PbMetaOperations::CreateProject(grpc::ServerContext* context, const
                                              seerep::ProjectInfo* response)
 {
   (void)context;  // ignore that variable without causing warnings
-  std::cout << "create new project... " << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "create new project... ";
   seerep_core_msgs::ProjectInfo projectInfo;
   projectInfo.frameId = request->mapframeid();
   projectInfo.name = request->name();
@@ -28,7 +28,7 @@ grpc::Status PbMetaOperations::GetProjects(grpc::ServerContext* context, const g
 {
   (void)context;  // ignore that variable without causing warnings
   (void)request;  // ignore that variable without causing warnings
-  std::cout << "query the project infos... " << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "query the project infos... ";
   auto projectInfos = seerepCore->getProjects();
 
   for (auto projectInfo : projectInfos)

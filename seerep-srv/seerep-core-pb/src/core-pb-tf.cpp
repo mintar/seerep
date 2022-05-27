@@ -17,7 +17,7 @@ CorePbTf::~CorePbTf()
 
 std::optional<seerep::TransformStamped> CorePbTf::getData(const seerep::TransformStampedQuery& query)
 {
-  std::cout << "loading tf from tfs/" << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading tf from tfs/";
   boost::uuids::string_generator gen;
   seerep_core_msgs::QueryTf queryTf;
   queryTf.childFrameId = query.child_frame_id();

@@ -20,7 +20,7 @@ CorePbPointCloud::~CorePbPointCloud()
 
 std::vector<seerep::PointCloud2> CorePbPointCloud::getData(const seerep::Query& query)
 {
-  std::cout << "loading image from images/" << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading image from images/";
   seerep_core_msgs::Query queryCore;
   // TODO do the transform
   boost::uuids::string_generator gen;

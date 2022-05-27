@@ -22,6 +22,10 @@
 #include <boost/uuid/uuid_generators.hpp>  // generators
 #include <boost/uuid/uuid_io.hpp>          // streaming operators etc.
 
+// logging
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/trivial.hpp>
+
 namespace seerep_core_pb
 {
 class CorePbPointCloud
@@ -40,6 +44,7 @@ private:
   std::unordered_map<boost::uuids::uuid, std::shared_ptr<seerep_hdf5_pb::Hdf5PbPointCloud>,
                      boost::hash<boost::uuids::uuid>>
       m_hdf5IoMap;
+  boost::log::sources::severity_logger<boost::log::trivial::severity_level> m_logger;
 };
 
 }  // namespace seerep_core_pb

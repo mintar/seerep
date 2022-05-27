@@ -12,7 +12,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
                                                    seerep::ServerResponse* response)
 {
   (void)context;  // ignore that variable without causing warnings
-  std::cout << "received transform... " << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "received transform... ";
 
   if (!transform->header().uuid_project().empty())
   {
@@ -32,7 +32,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
     {
       // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
       // also catching core doesn't have project with uuid error
-      std::cout << e.what() << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::error) << e.what();
       response->set_message(std::string(e.what()));
       response->set_transmission_state(seerep::ServerResponse::FAILURE);
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, e.what());
@@ -40,7 +40,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
   }
   else
   {
-    std::cout << "project_uuid is empty!" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "project_uuid is empty!";
     response->set_message("project_uuid is empty!");
     response->set_transmission_state(seerep::ServerResponse::FAILURE);
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "project_uuid is empty!");
@@ -66,7 +66,7 @@ grpc::Status PbTfService::GetFrames(grpc::ServerContext* context, const seerep::
   {
     // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
     // also catching core doesn't have project with uuid error
-    std::cout << e.what() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::error) << e.what();
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, e.what());
   }
   return grpc::Status::OK;
@@ -89,7 +89,7 @@ grpc::Status PbTfService::GetTransformStamped(grpc::ServerContext* context,
   {
     // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
     // also catching core doesn't have project with uuid error
-    std::cout << e.what() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::error) << e.what();
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, e.what());
   }
 
