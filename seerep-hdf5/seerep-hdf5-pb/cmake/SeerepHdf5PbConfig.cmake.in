@@ -24,6 +24,12 @@ find_package(SeerepMsgs REQUIRED)
 list(APPEND SeerepHdf5Pb_INCLUDE_DIRS ${SeerepMsgs_INCLUDE_DIRS})
 list(APPEND SeerepHdf5Pb_LIBRARIES ${SeerepMsgs_LIBRARIES})
 
+find_package(Boost REQUIRED)
+list(APPEND SeerepHdf5Pb_INCLUDE_DIRS ${Boost_INCLUDE_DIRS})
+list(APPEND SeerepHdf5Pb_LIBRARIES ${Boost_LIBRARIES})
+list(APPEND SeerepHdf5Pb_LIBRARIES ${Boost_LOG_LIBRARY})
+list(APPEND SeerepHdf5Pb_LIBRARIES ${Boost_LOG_SETUP_LIBRARY})
+
 #find_package(SeerepHdf5Core REQUIRED)
 #list(APPEND SeerepHdf5Pb_INCLUDE_DIRS ${SeerepHdf5Core_INCLUDE_DIRS})
 #list(APPEND SeerepHdf5Pb_LIBRARIES ${SeerepHdf5Core_LIBRARIES})

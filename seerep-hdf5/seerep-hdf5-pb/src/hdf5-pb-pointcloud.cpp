@@ -241,7 +241,7 @@ void Hdf5PbPointCloud::writeOtherFields(const std::string& uuid, const seerep::P
         write<double>(uuid, field.name(), cloud, field.count());
         break;
       default:
-        std::cout << "datatype of pointcloud unknown" << std::endl;
+        BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "datatype of pointcloud unknown";
         break;
     }
   }
@@ -434,7 +434,7 @@ void Hdf5PbPointCloud::readOtherFields(const std::string& uuid, seerep::PointClo
         read<double>(uuid, field.name(), cloud, field.count());
         break;
       default:
-        std::cout << "datatype of pointcloud unknown" << std::endl;
+        BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "datatype of pointcloud unknown";
         break;
     }
   }

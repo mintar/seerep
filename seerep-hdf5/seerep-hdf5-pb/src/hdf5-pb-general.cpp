@@ -15,10 +15,11 @@ std::optional<std::string> Hdf5PbGeneral::readFrameId(const std::string& datatyp
   std::string hdf5DatasetRawDataPath = id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::RAWDATA;
   if (!m_file->exist(hdf5DatasetRawDataPath))
   {
-    std::cout << "id " << hdf5DatasetRawDataPath << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << hdf5DatasetRawDataPath << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + hdf5DatasetRawDataPath + " does not exist in file " + m_file->getName());
   }
-  std::cout << "get dataset " << hdf5DatasetRawDataPath << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get dataset " << hdf5DatasetRawDataPath;
   std::shared_ptr<HighFive::DataSet> data_set_ptr =
       std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRawDataPath));
 
@@ -72,16 +73,17 @@ void Hdf5PbGeneral::writeAABB(
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
-  std::cout << "get group " << id << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
   HighFive::Group group = m_file->getGroup(id);
 
   std::vector<float> aabbPoints{ aabb.min_corner().get<0>(), aabb.min_corner().get<1>(), aabb.min_corner().get<2>(),
                                  aabb.max_corner().get<0>(), aabb.max_corner().get<1>(), aabb.max_corner().get<2>() };
 
-  std::cout << "write AABB as attribute" << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "write AABB as attribute";
   if (!group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::AABB_FIELD))
     group.createAttribute(seerep_hdf5_core::Hdf5CoreGeneral::AABB_FIELD, aabbPoints);
   else
@@ -98,10 +100,11 @@ void Hdf5PbGeneral::readAABB(
 
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
-  std::cout << "get group " << id << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
   HighFive::Group group = m_file->getGroup(id);
   if (group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::AABB_FIELD))
   {
@@ -123,10 +126,11 @@ bool Hdf5PbGeneral::hasAABB(const std::string& datatypeGroup, const std::string&
 
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
-  std::cout << "get group " << id << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
   HighFive::Group group = m_file->getGroup(id);
   return group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::AABB_FIELD);
 }
@@ -143,7 +147,8 @@ void Hdf5PbGeneral::readTime(const std::string& datatypeGroup, const std::string
 
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
 
@@ -151,7 +156,7 @@ void Hdf5PbGeneral::readTime(const std::string& datatypeGroup, const std::string
   {
     case HighFive::ObjectType::Group:
     {
-      std::cout << "get group " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
       HighFive::Group group = m_file->getGroup(id);
       if (group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
       {
@@ -176,7 +181,7 @@ void Hdf5PbGeneral::readTime(const std::string& datatypeGroup, const std::string
 
     case HighFive::ObjectType::Dataset:
     {
-      std::cout << "get group " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
       HighFive::DataSet dataset = m_file->getDataSet(id);
       if (dataset.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
       {
@@ -218,7 +223,8 @@ void Hdf5PbGeneral::writeTime(const std::string& datatypeGroup, const std::strin
 
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
 
@@ -226,7 +232,7 @@ void Hdf5PbGeneral::writeTime(const std::string& datatypeGroup, const std::strin
   {
     case HighFive::ObjectType::Group:
     {
-      std::cout << "get group " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
       HighFive::Group group = m_file->getGroup(id);
       if (group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
       {
@@ -250,7 +256,7 @@ void Hdf5PbGeneral::writeTime(const std::string& datatypeGroup, const std::strin
 
     case HighFive::ObjectType::Dataset:
     {
-      std::cout << "get group " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
       HighFive::DataSet dataset = m_file->getDataSet(id);
       if (dataset.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
       {
@@ -286,19 +292,20 @@ bool Hdf5PbGeneral::hasTime(const std::string& datatypeGroup, const std::string&
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id))
   {
-    std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id << " does not exist in file " << m_file->getName();
     throw std::invalid_argument("id " + id + " does not exist in file " + m_file->getName());
   }
 
   switch (m_file->getObjectType(id))
   {
     case HighFive::ObjectType::Group:
-      std::cout << "get group " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get group " << id;
       return m_file->getGroup(id).hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS) &&
              m_file->getGroup(id).hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_NANOS);
 
     case HighFive::ObjectType::Dataset:
-      std::cout << "get dataset " << id << std::endl;
+      BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "get dataset " << id;
       return m_file->getDataSet(id).hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS) &&
              m_file->getDataSet(id).hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_NANOS);
 
@@ -374,14 +381,16 @@ Hdf5PbGeneral::readBoundingBox2DLabeled(const std::string& datatypeGroup, const 
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBB))
   {
-    std::cout << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBB << " does not exist in file "
-              << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBB << " does not exist in file "
+        << m_file->getName();
     return std::nullopt;
   }
   if (!m_file->exist(id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBBBOXES))
   {
-    std::cout << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBBBOXES << " does not exist in file "
-              << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBBBOXES << " does not exist in file "
+        << m_file->getName();
     return std::nullopt;
   }
 
@@ -396,8 +405,9 @@ Hdf5PbGeneral::readBoundingBox2DLabeled(const std::string& datatypeGroup, const 
 
   if (labels.size() != boundingBoxes.size())
   {
-    std::cout << "size of labels (" << labels.size() << ") and size of bounding boxes (" << boundingBoxes.size()
-              << ") do not fit." << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "size of labels (" << labels.size() << ") and size of bounding boxes (" << boundingBoxes.size()
+        << ") do not fit.";
     return std::nullopt;
   }
 
@@ -446,8 +456,9 @@ Hdf5PbGeneral::readLabelsGeneral(const std::string& datatypeGroup, const std::st
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL))
   {
-    std::cout << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL << " does not exist in file "
-              << m_file->getName() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "id " << id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL << " does not exist in file "
+        << m_file->getName();
     return std::nullopt;
   }
 

@@ -21,7 +21,8 @@ void Hdf5PbTf::writeTransformStamped(const seerep::TransformStamped& tf)
 
   if (!m_file->exist(hdf5DatasetPath))
   {
-    std::cout << "data id " << hdf5DatasetPath << " does not exist! Creat new dataset in hdf5" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "data id " << hdf5DatasetPath << " does not exist! Creat new dataset in hdf5";
     HighFive::Group group = m_file->createGroup(hdf5DatasetPath);
     group.createAttribute("CHILD_FRAME", tf.child_frame_id());
     group.createAttribute("PARENT_FRAME", tf.header().frame_id());
@@ -55,7 +56,8 @@ void Hdf5PbTf::writeTransformStamped(const seerep::TransformStamped& tf)
   }
   else
   {
-    std::cout << "data id " << hdf5DatasetPath << " already exists!" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "data id " << hdf5DatasetPath << " already exists!";
     data_set_time_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetTimePath));
     data_set_trans_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetTransPath));
     data_set_rot_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRotPath));
@@ -113,7 +115,7 @@ std::optional<std::vector<seerep::TransformStamped>> Hdf5PbTf::readTransformStam
     return std::nullopt;
   }
 
-  std::cout << "loading " << hdf5GroupPath << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading " << hdf5GroupPath;
 
   // read size
   std::shared_ptr<HighFive::Group> group_ptr = std::make_shared<HighFive::Group>(m_file->getGroup(hdf5GroupPath));
@@ -121,7 +123,7 @@ std::optional<std::vector<seerep::TransformStamped>> Hdf5PbTf::readTransformStam
   group_ptr->getAttribute(SIZE).read(size);
   if (size == 0)
   {
-    std::cout << "tf data has size 0." << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "tf data has size 0.";
     return std::nullopt;
   }
 
@@ -152,8 +154,9 @@ std::optional<std::vector<seerep::TransformStamped>> Hdf5PbTf::readTransformStam
   // check if all have the right size
   if (time.size() != size || trans.size() != size || rot.size() != size)
   {
-    std::cout << "sizes of time (" << time.size() << "), translation (" << trans.size() << ") and rotation ("
-              << rot.size() << ") not matching. Size expected by value in metadata (" << size << ")" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "sizes of time (" << time.size() << "), translation (" << trans.size() << ") and rotation (" << rot.size()
+        << ") not matching. Size expected by value in metadata (" << size << ")";
     return std::nullopt;
   }
 
@@ -196,7 +199,7 @@ std::optional<std::vector<std::string>> Hdf5PbTf::readTransformStampedFrames(con
 
   std::shared_ptr<HighFive::Group> group_ptr = std::make_shared<HighFive::Group>(m_file->getGroup(hdf5GroupPath));
 
-  std::cout << "loading parent frame of " << hdf5GroupPath << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading parent frame of " << hdf5GroupPath;
 
   // read frames
   std::string parentframe;

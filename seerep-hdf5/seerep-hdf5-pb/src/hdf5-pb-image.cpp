@@ -21,13 +21,15 @@ void Hdf5PbImage::writeImage(const std::string& id, const seerep::Image& image)
 
   if (!m_file->exist(hdf5DatasetRawDataPath))
   {
-    std::cout << "data id " << hdf5DatasetRawDataPath << " does not exist! Creat new dataset in hdf5" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "data id " << hdf5DatasetRawDataPath << " does not exist! Creat new dataset in hdf5";
     data_set_ptr =
         std::make_shared<HighFive::DataSet>(m_file->createDataSet<uint8_t>(hdf5DatasetRawDataPath, data_space));
   }
   else
   {
-    std::cout << "data id " << hdf5DatasetRawDataPath << " already exists!" << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
+        << "data id " << hdf5DatasetRawDataPath << " already exists!";
     data_set_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRawDataPath));
   }
 
@@ -90,7 +92,7 @@ std::optional<seerep::Image> Hdf5PbImage::readImage(const std::string& id)
   if (!m_file->exist(hdf5DatasetRawDataPath))
     return std::nullopt;
 
-  std::cout << "loading " << hdf5DatasetRawDataPath << std::endl;
+  BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "loading " << hdf5DatasetRawDataPath;
 
   std::shared_ptr<HighFive::DataSet> data_set_ptr =
       std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRawDataPath));
@@ -108,7 +110,7 @@ std::optional<seerep::Image> Hdf5PbImage::readImage(const std::string& id)
   }
   catch (const std::invalid_argument& e)
   {
-    std::cout << "error: " << e.what() << std::endl;
+    BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::error) << "error: " << e.what();
     return std::nullopt;
   }
   std::vector<std::vector<std::vector<uint8_t>>> read_data;
@@ -127,11 +129,11 @@ std::optional<seerep::Image> Hdf5PbImage::readImage(const std::string& id)
     }
   }
 
-  // std::cout << "read_data:" << std::endl;
+  // BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << "read_data:" ;
   // int j = 0;
   // for (const auto& i : read_data)
   // {
-  //   std::cout << unsigned(i) << ' ';
+  //   BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info) << unsigned(i) << ' ';
   //   j++;
   //   // if (j > 50)
   //   // break;
