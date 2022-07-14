@@ -110,6 +110,7 @@ private:
   void createServicesFb();
 
   /** @brief the value map of the program options from commandline or cfg file*/
+  // Abkürzung von dem Parameter ist im QuellCode nicht mehr verständlich
   boost::program_options::variables_map m_vm;
 
   /** @brief the seerep core which deals with the data indexing*/

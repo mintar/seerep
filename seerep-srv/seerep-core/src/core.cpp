@@ -9,6 +9,7 @@ Core::Core(std::string dataFolder, bool loadHdf5Files) : m_dataFolder(dataFolder
     recreateProjects();
   }
 }
+
 Core::~Core()
 {
 }
@@ -17,13 +18,15 @@ seerep_core_msgs::QueryResult Core::getDataset(const seerep_core_msgs::Query& qu
 {
   seerep_core_msgs::QueryResult result;
 
+  // divide into at least two methods and see if you can reduce the duplicated code
+
   // search all projects
   if (!query.projects)
   {
     for (auto& it : m_projects)
     {
       auto dataset = it.second->getDataset(query);
-      if (!dataset.dataOrInstanceUuids.empty())
+      if (!dataset.dataOrInstanceUuids.empty())  // same call
       {
         result.queryResultProjects.push_back(dataset);
       }
@@ -38,7 +41,7 @@ seerep_core_msgs::QueryResult Core::getDataset(const seerep_core_msgs::Query& qu
       if (project != m_projects.end())
       {
         auto dataset = project->second->getDataset(query);
-        if (!dataset.dataOrInstanceUuids.empty())
+        if (!dataset.dataOrInstanceUuids.empty())  // same call
         {
           result.queryResultProjects.push_back(dataset);
         }
@@ -58,6 +61,8 @@ seerep_core_msgs::QueryResult Core::getDataset(const seerep_core_msgs::Query& qu
 seerep_core_msgs::QueryResult Core::getInstances(const seerep_core_msgs::Query& query)
 {
   seerep_core_msgs::QueryResult result;
+
+  // duplicated code
 
   // search all projects
   if (!query.projects)
@@ -79,6 +84,7 @@ seerep_core_msgs::QueryResult Core::getInstances(const seerep_core_msgs::Query& 
       auto project = m_projects.find(projectuuid);
       if (project != m_projects.end())
       {
+        // change to getInstance
         auto instances = project->second->getDataset(query);
         if (!instances.dataOrInstanceUuids.empty())
         {

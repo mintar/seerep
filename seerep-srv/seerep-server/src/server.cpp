@@ -27,15 +27,12 @@ void server::parseProgramOptions(int argc, char** argv)
 {
   try
   {
-    // Declare a group of options that will be
-    // allowed only on command line
+    // Declare a group of options that will be allowed only on command line
     boost::program_options::options_description generic("Generic options");
     generic.add_options()("version,v", "print version string")("help", "produce help message")(
         "config,c", boost::program_options::value<std::string>(), "name of a file of a configuration.");
 
-    // Declare a group of options that will be
-    // allowed both on command line and in
-    // config file
+    // Declare a group of options that will be allowed both on command line and in config file
     boost::program_options::options_description config("Configuration");
     config.add_options()("data-folder,D",
                          boost::program_options::value<std::string>()->default_value(std::filesystem::current_path()),
@@ -91,6 +88,8 @@ void server::parseProgramOptions(int argc, char** argv)
 
 void server::initLogging()
 {
+  // can you divide this method into two, one for the file logging and one for the cmd-logging
+
   std::string logPath;
   if (m_vm.count("log-path"))
   {
@@ -135,8 +134,9 @@ void server::createGrpcServer()
   grpc::ServerBuilder serverBuilder;
   serverBuilder.AddListeningPort(serverAddress, grpc::InsecureServerCredentials());
 
-  // add flatbuffer and protobuf services
+  // add Pb = protobuf services
   addServicesPb(serverBuilder);
+  // add service fb = flatbuffer
   addServicesFb(serverBuilder);
 
   // create the server and serve
@@ -150,6 +150,7 @@ std::string server::getDataFolder()
   std::string dataFolder = m_vm.at("data-folder").as<std::string>();
 
   // append '/' if not path does not end with it
+  // why is this stuff not within the try block?
   if (!dataFolder.empty() && dataFolder.back() != '/')
   {
     dataFolder += '/';
@@ -179,7 +180,8 @@ void server::addServicesPb(grpc::ServerBuilder& server_builder)
   server_builder.RegisterService(&*m_tfServicePb);
   server_builder.RegisterService(&*m_imageServicePb);
   server_builder.RegisterService(&*m_pointCloudServicePb);
-  // server_builder.RegisterService(receiveSensorMsgs);
+  // not needed?
+  //  server_builder.RegisterService(receiveSensorMsgs);
 }
 
 void server::addServicesFb(grpc::ServerBuilder& server_builder)
