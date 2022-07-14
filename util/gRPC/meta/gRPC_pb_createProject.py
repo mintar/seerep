@@ -15,6 +15,8 @@ import projectCreation_pb2
 # creds = grpc.ssl_channel_credentials(root_cert)
 # channel = grpc.secure_channel(server, creds)
 
+# seerep.robot.10.249.3.13.nip.io:32141
+
 # server without certs
 server = "localhost:9090"
 channel = grpc.insecure_channel(server)

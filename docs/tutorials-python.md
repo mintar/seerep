@@ -116,6 +116,8 @@ for n in range(10):
     theImage = image.Image()
 
     rgb = []
+    # was soll lim sein?
+    # hätte man das nicht auch über numpy lösen können, ohne die zweite Schleife
     lim = 256 # 256x256 image
     for i in range(lim):
         for j in range(lim):

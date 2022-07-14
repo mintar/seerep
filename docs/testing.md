@@ -27,7 +27,7 @@ restart the development container. For that you can use `Reopen Folder Locally`
 and then `Reopen In Container`. Now you should be able to see the test cases as,
 in the example:
 
-![](imgs/Vs-Code-Testing.png){ width=400}
+![](imgs/Vs-Code-Testing.png){ width=400px; }
 
 The icons in the top are mostly self-explanatory, all tests can be run, a single
 test can be debugged, and a terminal can be opened to print the output of the tests.

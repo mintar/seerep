@@ -21,7 +21,7 @@ In the following, each package will be described in more detail.
 
 ### seerep-hdf5
 
-The `seerep-hd5f` unit provides access to the hdf5 files to store or retrieve
+The `seerep-hdf5` unit provides access to the hdf5 files to store or retrieve
 data. The unit is split into three
 packages `seeprep-hdf5-core`, `seerep-hdf5-pb` and `seerep-hdf5-fb`. This is to
 have a server-core which is independent of the message format, so that it's

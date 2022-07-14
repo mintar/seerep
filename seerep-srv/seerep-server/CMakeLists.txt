@@ -28,6 +28,9 @@ find_package(catkin REQUIRED
 	seerep_ros_conversions_fb
 )
 
+# Was ist mit dem auskommentierten Dependencies?
+# Warum sind die auskommentiert? werden die noch gebraucht, oder können die weg?
+
 # message("LIBS" ${SeerepCorePb_LIBRARIES})
 # message("INCS" ${SeerepCorePb_INCLUDE_DIRS})
 # message("INCS2" ${HighFive_INCLUDE_DIRS})
