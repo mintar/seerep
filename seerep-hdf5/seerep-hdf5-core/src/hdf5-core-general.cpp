@@ -2,6 +2,7 @@
 
 #include <highfive/H5DataSet.hpp>
 
+// remove the commented code!
 namespace seerep_hdf5_core
 {
 Hdf5CoreGeneral::Hdf5CoreGeneral(std::shared_ptr<HighFive::File>& file, std::shared_ptr<std::mutex>& write_mtx)

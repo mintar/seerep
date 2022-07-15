@@ -23,6 +23,7 @@ std::optional<std::unordered_map<std::string, std::string>> Hdf5CoreInstance::re
 
   std::string hdf5GroupPath = HDF5_GROUP_INSTANCE + "/" + uuid;
 
+  // wouldn't it be nicer to catch this in a try-catch, instead of an extra if?
   if (!m_file->exist(hdf5GroupPath))
   {
     return std::nullopt;

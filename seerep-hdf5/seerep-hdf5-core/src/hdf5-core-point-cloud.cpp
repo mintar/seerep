@@ -37,6 +37,8 @@ std::optional<seerep_core_msgs::DatasetIndexable> Hdf5CorePointCloud::readDatase
   group_ptr->getAttribute(seerep_hdf5_core::Hdf5CorePointCloud::HEADER_STAMP_SECONDS).read(data.header.timestamp.seconds);
   group_ptr->getAttribute(seerep_hdf5_core::Hdf5CorePointCloud::HEADER_STAMP_NANOS).read(data.header.timestamp.nanos);
 
+  // this code block is duplicated
+  // for such stuff, introduce a util-package and reuse code!
   std::vector<float> bb;
   group_ptr->getAttribute(seerep_hdf5_core::Hdf5CorePointCloud::BOUNDINGBOX).write(bb);
   data.boundingbox.min_corner().set<0>(bb.at(0));

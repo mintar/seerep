@@ -40,6 +40,7 @@ function(PROTOBUF_GENERATE_GRPC_CPP SRCS HDRS)
     list(APPEND ${SRCS} "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}.grpc.pb.cc")
     list(APPEND ${HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${FIL_WE}.grpc.pb.h")
 
+    ## is this still in use
     #get_filename_component(DIR_FIL ${FIL} DIRECTORY)
     #list(APPEND ${SRCS} "${CMAKE_CURRENT_BINARY_DIR}/${DIR_FIL}/${FIL_WE}.grpc.pb.cc")
     #list(APPEND ${HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${DIR_FIL}/${FIL_WE}.grpc.pb.h")

@@ -72,6 +72,11 @@ std::vector<std::string> Hdf5CoreImage::getDatasetUuids()
 
 std::vector<std::string> Hdf5CoreImage::readLabelsGeneral(const std::string& dataGroup)
 {
+  // use a variable for
+  // some_stuff = dataGroup + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL)
+  // m_file->exists(some_stuff) and m_file->getDataSet(some_stuff)
+  // makes the code more readable
+
   if (!m_file->exist(dataGroup + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL))
   {
     BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::trace)
@@ -90,6 +95,11 @@ std::vector<std::string> Hdf5CoreImage::readLabelsGeneral(const std::string& dat
 
 std::vector<std::string> Hdf5CoreImage::readBoundingBoxLabels(const std::string& dataGroup)
 {
+  // use a variable for
+  // some_stuff = dataGroup + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL)
+  // m_file->exists(some_stuff) and m_file->getDataSet(some_stuff)
+  // makes the code more readable
+
   if (!m_file->exist(dataGroup + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBB))
   {
     BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::trace)

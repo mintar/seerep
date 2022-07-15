@@ -36,6 +36,7 @@ set(MY_FBS_FILES
   fbs/transfer-sensor-msgs.fbs
 )
 
+## is this still in use
 #message("SeerepMsgs FlatBuffers" ${SeerepMsgs_FLATBUFFERS_IMPORT_DIRS})
 
 build_flatbuffers("${MY_FBS_FILES}" "${SeerepMsgs_FLATBUFFERS_IMPORT_DIRS}" fbschemas "" "${CMAKE_CURRENT_BINARY_DIR}/fbs" "${CMAKE_CURRENT_BINARY_DIR}/fbs" "" )
@@ -46,6 +47,8 @@ add_dependencies(FlatBuffersTarget fbschemas)
 
 get_target_property(FlatBuffers_HEADERS fbschemas GENERATED_HEADERS)
 get_target_property(FlatBuffers_GRPC_SOURCES fbschemas GENERATED_GRPC_CC)
+
+## is this still in use
 
 # message("Message: " ${FlatBuffers_GRPC_SOURCES})
 
