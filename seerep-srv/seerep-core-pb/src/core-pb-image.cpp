@@ -21,6 +21,9 @@ std::vector<seerep::Image> CorePbImage::getData(const seerep::Query& query)
   queryCore.header.datatype = seerep_core_msgs::Datatype::Images;
   boost::uuids::string_generator gen;
   queryCore.projects.value().push_back(gen(query.projectuuid()));
+
+  // duplicate from from core-pb-pointcloud.cpp
+
   for (auto label : query.label())
   {
     queryCore.label.value().push_back(label);

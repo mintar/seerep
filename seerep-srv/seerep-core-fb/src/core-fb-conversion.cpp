@@ -1,5 +1,8 @@
 #include "seerep-core-fb/core-fb-conversion.h"
 
+//// @todo for every if in every method I would create a separate method
+// makes the code easier to test and more readable
+
 namespace seerep_core_fb
 {
 seerep_core_msgs::Query CoreFbConversion::fromFb(const seerep::fb::Query& query)

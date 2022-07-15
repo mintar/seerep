@@ -31,7 +31,7 @@ grpc::Status FbTfService::TransferTransformStamped(
         // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
         // also catching core doesn't have project with uuid error
         BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::error) << e.what();
-
+        // create a method for this
         flatbuffers::grpc::MessageBuilder builder;
         auto msg = builder.CreateString(std::string(e.what()));
         seerep::fb::ServerResponseBuilder responseBuilder(builder);
@@ -50,6 +50,7 @@ grpc::Status FbTfService::TransferTransformStamped(
       answer = "a msg had no project uuid!";
     }
   }
+  // create a method for this
   flatbuffers::grpc::MessageBuilder builder;
   auto msg = builder.CreateString(answer);
   seerep::fb::ServerResponseBuilder responseBuilder(builder);

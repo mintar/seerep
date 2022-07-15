@@ -23,9 +23,12 @@ std::vector<seerep::PointCloud2> CorePbPointCloud::getData(const seerep::Query& 
   std::cout << "loading image from images/" << std::endl;
   seerep_core_msgs::Query queryCore;
   queryCore.header.datatype = seerep_core_msgs::Datatype::Images;
-  // TODO do the transform
+  //// @todo do the transform
+  // is there an issue for this todo
   boost::uuids::string_generator gen;
   queryCore.projects.value().push_back(gen(query.projectuuid()));
+
+  // duplicate from from core-pb-image.cpp
   for (auto label : query.label())
   {
     queryCore.label.value().push_back(label);

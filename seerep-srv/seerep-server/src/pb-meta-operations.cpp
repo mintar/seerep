@@ -22,7 +22,7 @@ grpc::Status PbMetaOperations::CreateProject(grpc::ServerContext* context, const
 
   return grpc::Status::OK;
 }
-
+// either start methods with lower case or upper case, but not both
 grpc::Status PbMetaOperations::GetProjects(grpc::ServerContext* context, const google::protobuf::Empty* request,
                                            seerep::ProjectInfos* response)
 {

@@ -1,5 +1,7 @@
 #include "seerep-server/pb-receive-sensor-msgs.h"
 
+// So, nothing is really implemented here
+
 namespace seerep_server
 {
 PbReceiveSensorMsgs::PbReceiveSensorMsgs(std::shared_ptr<seerep_core::Core> seerepCore) : seerepCore(seerepCore)

@@ -63,6 +63,7 @@ grpc::Status PbPointCloudService::TransferPointCloud2(grpc::ServerContext* conte
 
       boost::uuids::uuid uuidImg = pointCloudPb->addData(*pointCloud2);
 
+      // create one method for this
       response->set_message(boost::lexical_cast<std::string>(uuidImg));
       response->set_transmission_state(seerep::ServerResponse::SUCCESS);
       return grpc::Status::OK;
@@ -72,6 +73,7 @@ grpc::Status PbPointCloudService::TransferPointCloud2(grpc::ServerContext* conte
       // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
       // also catching core doesn't have project with uuid error
       std::cout << e.what() << std::endl;
+      // create one method for this
       response->set_message(std::string(e.what()));
       response->set_transmission_state(seerep::ServerResponse::FAILURE);
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, e.what());
@@ -80,6 +82,7 @@ grpc::Status PbPointCloudService::TransferPointCloud2(grpc::ServerContext* conte
   else
   {
     std::cout << "project_uuid is empty!" << std::endl;
+    // create one method for this
     response->set_message("project_uuid is empty!");
     response->set_transmission_state(seerep::ServerResponse::FAILURE);
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "project_uuid is empty!");

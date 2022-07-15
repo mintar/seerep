@@ -17,6 +17,7 @@ CoreFbImage::~CoreFbImage()
 void CoreFbImage::getData(const seerep::fb::Query& query,
                           grpc::ServerWriter<flatbuffers::grpc::Message<seerep::fb::Image>>* const writer)
 {
+  // cout and not the logging framework?
   std::cout << "loading image from images/" << std::endl;
   seerep_core_msgs::Query queryCore = seerep_core_fb::CoreFbConversion::fromFb(query);
 
@@ -55,6 +56,7 @@ boost::uuids::uuid CoreFbImage::addData(const seerep::fb::Image& img)
 void CoreFbImage::addBoundingBoxesLabeled(const seerep::fb::BoundingBoxes2DLabeledStamped& bbs2dlabeled)
 {
   boost::uuids::string_generator gen;
+  // what is bbs??
   boost::uuids::uuid uuidMsg = gen(bbs2dlabeled.header()->uuid_msgs()->str());
   boost::uuids::uuid uuidProject = gen(bbs2dlabeled.header()->uuid_project()->str());
 

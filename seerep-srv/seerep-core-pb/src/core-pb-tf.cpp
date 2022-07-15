@@ -68,6 +68,7 @@ std::shared_ptr<seerep_hdf5_pb::Hdf5PbTf> CorePbTf::getHdf5(boost::uuids::uuid p
   // find the project based on its uuid
   auto hdf5io = m_hdf5IoMap.find(project);
   // if project was found add tf
+  // there is nothing added here!!!
   if (hdf5io != m_hdf5IoMap.end())
   {
     return hdf5io->second;
@@ -75,7 +76,7 @@ std::shared_ptr<seerep_hdf5_pb::Hdf5PbTf> CorePbTf::getHdf5(boost::uuids::uuid p
   // if not found ask core
   else
   {
-    // this throws an exeption if core has no project with the uuid
+    // this throws an exception if core has no project with the uuid
     getFileAccessorFromCore(project);
     // if getFileAccessorFromCore didn't throw an error, find project and return pointer
     return m_hdf5IoMap.find(project)->second;

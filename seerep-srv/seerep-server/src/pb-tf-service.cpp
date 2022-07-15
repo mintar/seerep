@@ -23,7 +23,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
       uuid = gen(transform->header().uuid_project());
 
       tfPb->addData(*transform);
-
+      // create one method for this
       response->set_message("added transform");
       response->set_transmission_state(seerep::ServerResponse::SUCCESS);
       return grpc::Status::OK;
@@ -32,6 +32,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
     {
       // mainly catching "invalid uuid string" when transforming uuid_project from string to uuid
       // also catching core doesn't have project with uuid error
+      // create one method for this
       std::cout << e.what() << std::endl;
       response->set_message(std::string(e.what()));
       response->set_transmission_state(seerep::ServerResponse::FAILURE);
@@ -41,6 +42,7 @@ grpc::Status PbTfService::TransferTransformStamped(grpc::ServerContext* context,
   else
   {
     std::cout << "project_uuid is empty!" << std::endl;
+    // create one method for this
     response->set_message("project_uuid is empty!");
     response->set_transmission_state(seerep::ServerResponse::FAILURE);
     return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "project_uuid is empty!");

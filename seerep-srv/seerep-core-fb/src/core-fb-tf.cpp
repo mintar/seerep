@@ -22,7 +22,7 @@ void CoreFbTf::getData(const seerep::fb::TransformStampedQuery& query,
   seerep_core_msgs::QueryTf queryTf = CoreFbConversion::fromFb(query);
 
   std::optional<geometry_msgs::TransformStamped> result = m_seerepCore->getTF(queryTf);
-
+  // what if not?
   if (result)
   {
     *response = seerep_ros_conversions_fb::toFlat(result.value(), query.header()->uuid_project()->str());

@@ -46,6 +46,7 @@ grpc::Status PbImageService::GetImage(grpc::ServerContext* context, const seerep
   return grpc::Status::OK;
 }
 
+// either start methods with lower case or upper case, but not both
 grpc::Status PbImageService::TransferImage(grpc::ServerContext* context, const seerep::Image* image,
                                            seerep::ServerResponse* response)
 {
