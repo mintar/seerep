@@ -98,6 +98,7 @@ std::vector<boost::uuids::uuid> CoreDataset::getInstances(const seerep_core_msgs
   return std::vector(instances.begin(), instances.end());
 }
 
+// what is message aabb?
 std::optional<std::vector<seerep_core_msgs::AabbIdPair>>
 CoreDataset::querySpatial(std::shared_ptr<DatatypeSpecifics> datatypeSpecifics, const seerep_core_msgs::Query& query)
 {
@@ -164,10 +165,9 @@ CoreDataset::querySemantic(std::shared_ptr<DatatypeSpecifics> datatypeSpecifics,
     }
     return result;
   }
-  else
-  {
-    return std::nullopt;
-  }
+  // the else should be unnecessary here; it will be called, if it does not go into the if-branch.
+  // so remove the else around the return; there are also other places in the code like this
+  return std::nullopt;
 }
 
 std::vector<boost::uuids::uuid>
@@ -244,6 +244,7 @@ CoreDataset::intersectVectorOfSets(std::vector<std::set<boost::uuids::uuid>>& ve
     // return the result as soon as all sets are intersected
     return std::vector(vectorOfSets.at(0).begin(), vectorOfSets.at(0).end());
   }
+  // unnecessary else-branch
   else
   {
     // return empty vector if input vector is empty
@@ -315,6 +316,7 @@ void CoreDataset::addDatasetToIndices(const seerep_core_msgs::Datatype& datatype
     datatypeSpecifics->dataWithMissingTF.push_back(std::make_shared<seerep_core_msgs::DatasetIndexable>(dataset));
   }
 
+  // comment or old code?
   // std::cout << "secs  " << std::bitset<64>((int64_t)dataset.header.timestamp.seconds);
   // std::cout << "shift " << std::bitset<64>((int64_t)dataset.header.timestamp.seconds << 32);
   // std::cout << "nanos " << std::bitset<64>((int64_t)dataset.header.timestamp.nanos);

@@ -128,6 +128,7 @@ void Core::recreateProjects()
   }
 }
 
+// method name: createProject
 void Core::newProject(const seerep_core_msgs::ProjectInfo& projectInfo)
 {
   std::string filename = boost::lexical_cast<std::string>(projectInfo.uuid);
@@ -152,6 +153,34 @@ std::vector<seerep_core_msgs::ProjectInfo> Core::getProjects()
 
   return projectInfos;
 }
+
+// create a private method, that will return the project and use that, instead of doing the same thing over and over again
+
+/**
+ * as an example for addDataset; the rest could look similar
+ *
+ * void Core::addDataset(const seerep_core_msgs::DatasetIndexable& dataset)
+ * {
+ *  try {
+ *  project = findProject(dataset.header.uuidProject)
+ *
+ *  project->second->addDataset(dataset)
+ * } catch {
+ *  handle catch-stuff
+ * }
+ *
+ * }
+ *
+ * void Core:findProejct(const uuidProject)
+ * {
+ *  auto project = m_project.find(uuidProject)
+ * if (project != m_project.end()) {
+ *  return project
+ * } else {
+ *  do something here, like throw an exception or so
+ * }
+ * }
+ * */
 
 void Core::addDataset(const seerep_core_msgs::DatasetIndexable& dataset)
 {
@@ -247,6 +276,7 @@ std::shared_ptr<std::mutex> Core::getHdf5FileMutex(const boost::uuids::uuid& pro
   // if not found return null pointer
   else
   {
+    // does that result in errors on the callee side?
     return nullptr;
   }
 }

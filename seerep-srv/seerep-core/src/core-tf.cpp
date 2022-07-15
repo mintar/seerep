@@ -56,8 +56,9 @@ void CoreTf::addDataset(const geometry_msgs::TransformStamped& transform)
   addToTfBuffer(transform);
 }
 
-// TODO optimise!
-// TODO same as transformQuery -> merge!
+//// @todo optimise!
+//// @todo same as transformQuery -> merge!
+// is there an issue for this todo
 seerep_core_msgs::AABB CoreTf::transformAABB(seerep_core_msgs::AABB aabb, const std::string& sourceFrame,
                                              const std::string& targetFrame, const int64_t& timeSecs,
                                              const int64_t& timeNanos)

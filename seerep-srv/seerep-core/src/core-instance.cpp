@@ -23,12 +23,14 @@ boost::uuids::uuid CoreInstance::getUUID()
 
 std::optional<std::string> CoreInstance::getAttribute(const std::string& key) const
 {
+  // value is not such a good name for a variable
   auto value = m_attributes.find(key);
 
   if (value != m_attributes.end())
   {
     return value->second;
   }
+  // unnecessary else-branch
   else
   {
     return std::nullopt;
@@ -40,6 +42,7 @@ void CoreInstance::writeAttribute(const std::string& key, const std::string& val
   auto emplaceResult = m_attributes.emplace(key, value);
 
   // key already in map -> override!
+  // what if not?
   if (!emplaceResult.second)
   {
     m_attributes.at(key) = value;

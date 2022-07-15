@@ -103,6 +103,7 @@ void CoreProject::recreateDatatypes()
   m_coreDatasets->addDatatype(seerep_core_msgs::Datatype::PointClouds, m_ioPointCloud);
 
   /// @todo add datatypes to datasets
+  // is there an issue for this todo
 
   std::vector<std::string> datatypeNames = m_ioGeneral->getGroupDatasets("");
   for (auto datatypeName : datatypeNames)
