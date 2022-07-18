@@ -19,6 +19,7 @@ void Hdf5FbImage::writeImage(const std::string& id, const seerep::fb::Image& ima
   std::shared_ptr<HighFive::DataSet> data_set_ptr;
   HighFive::DataSpace data_space({ image.height(), image.width(), image.step() / image.width() });
 
+  // create a file_exist-method and reuse that
   if (!m_file->exist(hdf5DatasetRawDataPath))
   {
     BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::info)
@@ -33,6 +34,7 @@ void Hdf5FbImage::writeImage(const std::string& id, const seerep::fb::Image& ima
     data_set_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRawDataPath));
   }
 
+  // hdf5-pb-image.cpp
   writeAttribute<uint32_t>(data_set_ptr, HEIGHT, image.height());
   writeAttribute<uint32_t>(data_set_ptr, WIDTH, image.width());
   writeAttribute<std::string>(data_set_ptr, ENCODING, image.encoding()->str());
@@ -67,6 +69,7 @@ void Hdf5FbImage::writeImage(const std::string& id, const seerep::fb::Image& ima
     tmp.at(row).resize(image.width());
     for (uint32_t col = 0; col < image.width(); col++)
     {
+      // remove commented code
       // for (int channel = 0; channel < pixel_step; channel++)
       // {
       //   tmp.at(row).at(col).push_back(*(begin + row * image.step() + col * pixel_step + channel));
@@ -133,6 +136,7 @@ std::optional<flatbuffers::grpc::Message<seerep::fb::Image>> Hdf5FbImage::readIm
   std::vector<std::vector<std::vector<uint8_t>>> read_data;
   data_set_ptr->read(read_data);
 
+  // remove commented code
   int pixel_step = step / width;
   // uint8_t data[height][width][pixel_step];
   std::vector<uint8_t> data;

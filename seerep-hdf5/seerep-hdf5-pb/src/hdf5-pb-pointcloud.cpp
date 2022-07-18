@@ -266,7 +266,7 @@ Hdf5PbPointCloud::CloudInfo Hdf5PbPointCloud::getCloudInfo(const seerep::PointCl
   return info;
 }
 
-// TODO read partial point cloud, e.g. only xyz without color, etc.
+//// @todo read partial point cloud, e.g. only xyz without color, etc.; create an issue
 std::optional<seerep::PointCloud2> Hdf5PbPointCloud::readPointCloud2(const std::string& uuid)
 {
   const std::scoped_lock lock(*m_write_mtx);
@@ -299,7 +299,7 @@ std::optional<seerep::PointCloud2> Hdf5PbPointCloud::readPointCloud2(const std::
 
   *pointcloud2.mutable_fields() = readPointFieldAttributes(cloud_group);
 
-  // TODO build header and Point Fields
+  //// @todo build header and Point Fields
 
   CloudInfo info = getCloudInfo(pointcloud2);
 
@@ -312,7 +312,7 @@ std::optional<seerep::PointCloud2> Hdf5PbPointCloud::readPointCloud2(const std::
   if (info.has_rgba)
     readColorsRGBA(uuid, pointcloud2);
 
-  // TODO normals
+  //// @todo normals
 
   if (!info.other_fields.empty())
     readOtherFields(uuid, pointcloud2, info.other_fields);

@@ -174,6 +174,7 @@ sensor_msgs::Image toROS(const seerep::fb::Image& image)
   ret.is_bigendian = image.is_bigendian();
   ret.step = image.step();
   ret.data.reserve(image.data()->size());
+  // remove
   // for (int i = 0; i < image.data()->size(); i++)
   // {
   //   ret.data.push_back(image.data()->Get(i));
@@ -445,10 +446,11 @@ flatbuffers::Offset<seerep::fb::BoundingBoxes2DLabeledStamped> toFlat(const visi
   return bbbuilder.Finish();
 }
 
-// vision_msgs::Detection2D toROS(const seerep::fb::BoundingBoxes2DLabeledStamped& bb_labeled_stamped)
-// {
-//   return vision_msgs::Detection2D();
-// }
+// remove
+//  vision_msgs::Detection2D toROS(const seerep::fb::BoundingBoxes2DLabeledStamped& bb_labeled_stamped)
+//  {
+//    return vision_msgs::Detection2D();
+//  }
 
 flatbuffers::grpc::Message<seerep::fb::BoundingBox2DLabeled> toFlat(const vision_msgs::Detection2D& detection2d)
 {

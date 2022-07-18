@@ -120,7 +120,7 @@ void Hdf5PbGeneral::readAABB(
 bool Hdf5PbGeneral::hasAABB(const std::string& datatypeGroup, const std::string& uuid)
 {
   std::string id = datatypeGroup + "/" + uuid;
-
+  // create a file_exist-method and reuse that
   if (!m_file->exist(id))
   {
     std::cout << "id " << id << " does not exist in file " << m_file->getName() << std::endl;
@@ -151,6 +151,7 @@ void Hdf5PbGeneral::readTime(const std::string& datatypeGroup, const std::string
   {
     case HighFive::ObjectType::Group:
     {
+      // pretty similar to hdf5-fb-general. Can this be somewhat merged
       std::cout << "get group " << id << std::endl;
       HighFive::Group group = m_file->getGroup(id);
       if (group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))

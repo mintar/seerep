@@ -19,6 +19,7 @@ void seerep_grpc_ros::TransferSensorMsgs::send(const std_msgs::Header::ConstPtr&
   grpc::ClientContext context;
   seerep::ServerResponse response;
   grpc::Status status = stub_->TransferHeader(&context, seerep_ros_conversions_pb::toProto(*msg), &response);
+  // create a check status-method an reuse
   if (!status.ok())
   {
     ROS_ERROR_STREAM("gRPC status error code: " << status.error_code() << " " << status.error_message());

@@ -30,7 +30,7 @@ void Hdf5PbImage::writeImage(const std::string& id, const seerep::Image& image)
     std::cout << "data id " << hdf5DatasetRawDataPath << " already exists!" << std::endl;
     data_set_ptr = std::make_shared<HighFive::DataSet>(m_file->getDataSet(hdf5DatasetRawDataPath));
   }
-
+  // hdf5-fb-image.cpp
   writeAttribute<uint32_t>(data_set_ptr, seerep_hdf5_core::Hdf5CoreImage::HEIGHT, image.height());
   writeAttribute<uint32_t>(data_set_ptr, seerep_hdf5_core::Hdf5CoreImage::WIDTH, image.width());
   writeAttribute<std::string>(data_set_ptr, seerep_hdf5_core::Hdf5CoreImage::ENCODING, image.encoding());
@@ -116,7 +116,7 @@ std::optional<seerep::Image> Hdf5PbImage::readImage(const std::string& id)
 
   int pixel_step = image.step() / image.width();
 
-  // TODO: write into protobuf data buffer
+  //// @todo : write into protobuf data buffer; create an issue and link it
   uint8_t data[image.height()][image.width()][pixel_step];
 
   for (unsigned int row = 0; row < image.height(); row++)
@@ -126,7 +126,7 @@ std::optional<seerep::Image> Hdf5PbImage::readImage(const std::string& id)
       std::copy(read_data.at(row).at(col).begin(), read_data.at(row).at(col).end(), data[row][col]);
     }
   }
-
+  // remove
   // std::cout << "read_data:" << std::endl;
   // int j = 0;
   // for (const auto& i : read_data)

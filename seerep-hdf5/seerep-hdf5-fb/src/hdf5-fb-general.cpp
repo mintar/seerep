@@ -145,6 +145,7 @@ void Hdf5FbGeneral::readTime(const std::string& datatypeGroup, const std::string
 {
   std::string id = datatypeGroup + "/" + uuid;
 
+  // create a method "check exists" and reuse that
   if (!m_file->exist(id))
   {
     BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::warning)
@@ -156,6 +157,7 @@ void Hdf5FbGeneral::readTime(const std::string& datatypeGroup, const std::string
   {
     case HighFive::ObjectType::Group:
     {
+      // create method
       BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::trace) << "get group " << id;
       HighFive::Group group = m_file->getGroup(id);
       if (group.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
@@ -181,6 +183,7 @@ void Hdf5FbGeneral::readTime(const std::string& datatypeGroup, const std::string
 
     case HighFive::ObjectType::Dataset:
     {
+      // create method
       BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::trace) << "get group " << id;
       HighFive::DataSet dataset = m_file->getDataSet(id);
       if (dataset.hasAttribute(seerep_hdf5_core::Hdf5CoreGeneral::HEADER_STAMP_SECONDS))
@@ -216,11 +219,13 @@ void Hdf5FbGeneral::writeTimeToRaw(const std::string& datatypeGroup, const std::
   writeTime(datatypeGroup, uuid + "/" + seerep_hdf5_core::Hdf5CoreGeneral::RAWDATA, secs, nanos);
 }
 
+// try to combine write and readTime, for it is pretty similar
 void Hdf5FbGeneral::writeTime(const std::string& datatypeGroup, const std::string& uuid, const int64_t& secs,
                               const int64_t& nanos)
 {
   std::string id = datatypeGroup + "/" + uuid;
 
+  // create a method "check exists" and reuse that
   if (!m_file->exist(id))
   {
     BOOST_LOG_SEV(m_logger, boost::log::trivial::severity_level::warning)
@@ -352,6 +357,7 @@ void Hdf5FbGeneral::writeBoundingBoxLabeled(
   }
 }
 
+// writeBoundingBox2DLabeled and writeBoundingBoxLabeled are also very similar
 void Hdf5FbGeneral::writeBoundingBox2DLabeled(
     const std::string& datatypeGroup, const std::string& uuid,
     const flatbuffers::Vector<flatbuffers::Offset<seerep::fb::BoundingBox2DLabeled>>* boundingbox2DLabeled)
@@ -394,6 +400,7 @@ void Hdf5FbGeneral::readBoundingBox2DLabeled(const std::string& datatypeGroup, c
                                              std::vector<std::vector<double>>& boundingBoxes,
                                              std::vector<std::string>& instances)
 {
+  // create a file_exist-method and reuse that
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELBB))
   {
@@ -471,6 +478,7 @@ void Hdf5FbGeneral::writeLabelsGeneral(
 void Hdf5FbGeneral::readLabelsGeneral(const std::string& datatypeGroup, const std::string& uuid,
                                       std::vector<std::string>& labels, std::vector<std::string>& instances)
 {
+  // create a file_exist-method and reuse that
   std::string id = datatypeGroup + "/" + uuid;
   if (!m_file->exist(id + "/" + seerep_hdf5_core::Hdf5CoreGeneral::LABELGENERAL))
   {
