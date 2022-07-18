@@ -75,7 +75,7 @@ to the remote host. Instructions on that can be found
 
 ## Manual Installation
 
-1. Install ROS Noetic with the offical
+1. Install ROS Noetic with the official
    [documentation](http://wiki.ros.org/noetic/Installation)
 2. Install SEEREPs dependencies:
       - [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)

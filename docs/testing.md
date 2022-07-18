@@ -11,7 +11,7 @@ different ways.
 ### Catkin
 
 The tests can be run via `catkin` in the command line. When run without a
-specific package, all test in the workspace are run. But while this is very
+specific package, all tests in the workspace are executed. But while this is very
 convenient, catkin does not provide much information/output if a test fails.
 
 ```bash

@@ -19,7 +19,7 @@ algorithms or manual labeling.
 Most existing environment representations focus on one or two of these
 information types, SEEREP is able to store all three. Thereby, SEEREP enables
 the robot is able to reason on a higher level and disambiguate sensor data based
-on the context.
+on the context. (what?)
 
 ## Core Features
 

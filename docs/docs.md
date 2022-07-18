@@ -1,9 +1,9 @@
 # Docs
 
 The documentation is published via GitHub Pages. The responsible workflow
-combines `Doxygen` and `MkDocs` into one page, so it is more convenient to ues.
+combines `Doxygen` and `MkDocs` into one page, so it is more convenient to use.
 MkDocs focusses on higher level concepts like the installation process and a
-package overview, while Doxygen ist used for code documentation. If you want to
+package overview, while Doxygen is used for code documentation. If you want to
 work on the documentation locally i.e for a PR follow the steps below. Locally the two
 documentation systems must be run individually.
 

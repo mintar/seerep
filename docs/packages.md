@@ -65,7 +65,7 @@ query the server for information to support his understanding of the environment
 and aid its navigation.
 
 * The `seerep_ros_communication\client` is responsible for sending sensor
-  information direclty to the remote server.
+  information directly to the remote server.
 
 * The `seerep_ros_communication\querier` is used to get information from the
   remote server.
