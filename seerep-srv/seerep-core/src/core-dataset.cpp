@@ -254,7 +254,7 @@ CoreDataset::intersectVectorOfSets(std::vector<std::set<boost::uuids::uuid>>& ve
 
 void CoreDataset::addDataset(const seerep_core_msgs::DatasetIndexable& dataset)
 {
-  /// @todo does the default constructor of uuid generate nil uuids?
+  /// @todo does the default constructor of uuid generate nil uuids?; issue?
   if (dataset.header.uuidData.is_nil())
   {
     throw std::invalid_argument("invalid uuid");

@@ -28,7 +28,7 @@ namespace seerep_core
  * of existing instances can be queried or modified.
  *
  * @todo check if core-instance and core-instances can be merge into one class like
- * it's done for image and point cloud
+ * it's done for image and point cloud; issue?
  */
 class CoreInstances
 {

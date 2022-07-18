@@ -95,7 +95,7 @@ bool CoreTf::canTransform(const std::string& sourceFrame, const std::string& tar
   return m_tfBuffer.canTransform(targetFrame, sourceFrame, ros::Time(timeSecs, timeNanos));
 }
 
-/// @todo same as transformAABB -> merge!
+/// @todo same as transformAABB -> merge!; issue
 seerep_core_msgs::Query CoreTf::transformQuery(const seerep_core_msgs::Query& query, std::string targetFrame)
 {
   // if spatial query is set and if targetframe and query frame differ, transform the spatial query

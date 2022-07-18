@@ -40,7 +40,7 @@ namespace seerep_core
  * They never write data. The only exception are the instances. For those the write to the HDF5 file
  * is handled by this seerepCore
  *
- * @todo add a check if query has the adequate rights to access this project
+ * @todo add a check if query has the adequate rights to access this project; issue
  */
 class CoreProject
 {

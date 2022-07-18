@@ -74,7 +74,7 @@ void CoreFbImage::addBoundingBoxesLabeled(const seerep::fb::BoundingBoxes2DLabel
   // existing labels. The data is only correct if labels are added and there
   // weren't any bounding box labels before
 
-  /// @todo also add instance
+  /// @todo also add instance; issue?
   m_seerepCore->addLabels(seerep_core_msgs::Datatype::Images, labels, uuidMsg, uuidProject);
 }
 

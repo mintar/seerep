@@ -29,7 +29,7 @@ namespace seerep_core
  * The UUID of all data showing the instances are stored and can be easily queried.
  *
  * @todo check if core-instance and core-instances can be merge into one class like
- * it's done for image and point cloud
+ * it's done for image and point cloud; is there an issue
  */
 class CoreInstance
 {

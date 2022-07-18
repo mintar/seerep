@@ -77,7 +77,7 @@ seerep::Header Hdf5PbGeneral::readHeaderAttributes(HighFive::AnnotateTraits<T>& 
   header.mutable_stamp()->set_seconds(seconds);
   header.mutable_stamp()->set_nanos(nanos);
   header.set_uuid_project(uuidProject);
-  /// @todo set uuidMsg
+  /// @todo set uuidMsg ; create issue
 
   return header;
 }

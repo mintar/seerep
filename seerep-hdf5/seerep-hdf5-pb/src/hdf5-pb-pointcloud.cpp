@@ -70,7 +70,7 @@ std::shared_ptr<HighFive::Group> Hdf5PbPointCloud::writePointCloud2(const std::s
   if (info.has_rgba)
     writeColorsRGBA(uuid, pointcloud2);
 
-  // TODO normals
+  //// @todo normals; create issue
   if (!info.other_fields.empty())
     writeOtherFields(uuid, pointcloud2, info.other_fields);
 
@@ -299,7 +299,7 @@ std::optional<seerep::PointCloud2> Hdf5PbPointCloud::readPointCloud2(const std::
 
   *pointcloud2.mutable_fields() = readPointFieldAttributes(cloud_group);
 
-  //// @todo build header and Point Fields
+  //// @todo build header and Point Fields; create issue
 
   CloudInfo info = getCloudInfo(pointcloud2);
 

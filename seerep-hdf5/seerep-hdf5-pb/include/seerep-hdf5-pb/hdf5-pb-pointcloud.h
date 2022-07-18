@@ -109,6 +109,7 @@ private:
 
   google::protobuf::RepeatedPtrField<seerep::PointField> readPointFieldAttributes(HighFive::Group& cloud_group);
 
+  // remove
   //   // image / pointcloud attribute keys
   //   inline static const std::string HEIGHT = "height";
   //   inline static const std::string WIDTH = "width";
